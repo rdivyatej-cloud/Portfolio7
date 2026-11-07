@@ -1,293 +1,299 @@
 export interface Project {
+  number: string;
   id: string;
   title: string;
+  subtitle: string;
   category: string;
   stack: string[];
-  description: string[];
+  description: string;
+  features: string[];
   githubUrl: string;
+  liveUrl?: string;
   image: string;
-  doorCategories: ('backend-engineering' | 'ai-llm-integration' | 'full-stack-apps' | 'cybersecurity')[];
-  featured?: boolean;
+  highlightColor: string;
 }
 
 export interface TimelineEntry {
   period: string;
-  title: string;
+  role: string;
   organization: string;
-  description: string;
+  location?: string;
+  details: string[];
+  type: 'experience' | 'education';
   badge?: string;
-  tags?: string[];
-  notes?: string;
 }
 
-export interface SkillCategory {
-  title: string;
+export interface SkillGroup {
+  category: string;
   skills: string[];
-}
-
-export interface Door {
-  id: 'backend-engineering' | 'ai-llm-integration' | 'full-stack-apps' | 'cybersecurity';
-  title: string;
-  subtitle: string;
   description: string;
-  doorNumber: string;
-  accent: string;
-  highlightedStack: string[];
-  keyStrengths: string[];
 }
 
-export const PERSONAL_INFO = {
+export interface Certification {
+  title: string;
+  issuer: string;
+  year: string;
+  credential?: string;
+}
+
+export const PERSONAL = {
   name: "Divyatej Rallapalli",
-  firstName: "Divyatej",
-  lastName: "Rallapalli",
-  initials: "DR",
-  profileImage: "./images/profile.jpg",
-  resumePath: "./resume/Divyatej_Rallapalli_CV.pdf",
-  roles: [
-    "Backend Engineer",
-    "AI Engineer",
-    "Cybersecurity"
+  title: "Backend & AI Engineer | Software Engineering | Cybersecurity",
+  roleHeadline: "Backend & AI Engineer",
+  heroHeadlines: [
+    "I build systems.",
+    "I engineer intelligence."
   ],
-  roleTitle: "Backend & AI Engineer | Software Engineering | Cybersecurity",
-  email: "rdivyatej@gmail.com",
-  linkedin: "https://linkedin.com/in/divyatej2007",
-  github: "https://github.com/rdivyatej-cloud",
-  previousPortfolio: "https://rdivyatej-cloud.github.io/divyatejportfolio2/",
-  repository: "https://github.com/rdivyatej-cloud/Portfolio7",
-  location: "Based in India", // TODO: exact city
-  availability: "Available for internships & entry-level roles",
-  university: "SRM University-AP",
-  summary:
-    "Computer Science (Cybersecurity) undergraduate at SRM University-AP with experience from a Backend & AI Engineering internship at FlyRank AI and five end-to-end projects across backend systems, full-stack apps and AI/LLM integration. Skilled in Python, Node.js, REST APIs, PostgreSQL/SQL, JavaScript and Docker, with a strong foundation in data structures, OOP, database design and secure software development. Solved 100+ problems on LeetCode and HackerRank. Seeking backend or AI engineering roles building reliable, scalable systems.",
+  supportingText: "Turning complex ideas into reliable software, scalable backend systems, and intelligent applications.",
+  introduction: "I build reliable backend systems and intelligent applications that combine software engineering with AI. I'm a Computer Science undergraduate specializing in Cybersecurity at SRM University–AP, with practical experience building APIs, full-stack applications, database-driven systems, and AI-powered workflows.",
+  about: {
+    heading: "Beyond the code.",
+    description: "I'm a Computer Science student passionate about backend engineering, artificial intelligence, and building software that solves practical problems. I enjoy exploring new technologies, designing system architectures, and turning ideas into working applications.",
+    paragraphs: [
+      "My engineering foundation is rooted in cybersecurity, backend architectures, and AI integration. At SRM University–AP, I focus on understanding how modern distributed systems scale securely and how generative AI models can be woven into deterministic workflows.",
+      "During my internship at FlyRank AI, I engineered a high-throughput usage metering engine and integrated AI workflows with Stripe webhooks and Docker. I treat software engineering as the discipline of eliminating bottlenecks, preventing security vulnerabilities, and ensuring zero data loss.",
+      "When tackling a new problem, I start by designing clean database schemas, establishing clear API contracts, and structuring services around the principle of idempotency and failure-resilience."
+    ],
+    pillars: [
+      {
+        title: "Backend & Distributed Systems",
+        description: "Designing high-throughput REST APIs, idempotent metering pipelines, relational schemas, and microservice containerization."
+      },
+      {
+        title: "Applied AI & LLM Workflows",
+        description: "Orchestrating Gemini APIs, context window management, automated multi-tier token pricing, and generative data pipelines."
+      },
+      {
+        title: "Cybersecurity & Defenses",
+        description: "Cryptographic signature validation, tamper prevention, JWT/RBAC security, rate-limiting, and defensive software patterns."
+      },
+      {
+        title: "End-to-End Ownership",
+        description: "From architecture diagrams and PostgreSQL migrations to automated background cron jobs and production Docker deployments."
+      }
+    ]
+  },
+  education: {
+    institution: "SRM University–AP",
+    degree: "B.Tech in Computer Science Engineering (Cybersecurity)",
+    period: "2024–2028",
+    cgpa: "7.5",
+    preUniversity: {
+      institution: "Sri Chaitanya, Hormavu, Bangalore",
+      degree: "Intermediate (MPC)",
+      period: "2022–2024"
+    }
+  },
+  contact: {
+    email: "rdivyatej@gmail.com",
+    phone: "+91 7259175577",
+    linkedin: "https://www.linkedin.com/in/divyatej2007/",
+    github: "https://github.com/rdivyatej-cloud",
+    location: "India",
+    statusText: "Open to opportunities in Backend & AI Engineering"
+  }
 };
 
-export const DOORS: Door[] = [
+export const PROJECTS: Project[] = [
   {
-    id: "backend-engineering",
-    doorNumber: "01",
-    title: "Backend Engineering",
-    subtitle: "High-throughput APIs & Deterministic Engines",
-    description: "Designing idempotent metering engines, robust MVC architectures, webhook processors, and relational database systems.",
-    accent: "#ccff00",
-    highlightedStack: ["Node.js", "Express", "PostgreSQL", "Docker", "Stripe API"],
-    keyStrengths: ["Quota Limiting & Metering", "Idempotency & Deduplication", "Relational Modeling", "RESTful Architecture"]
+    number: "01",
+    id: "flyrank-capstone",
+    title: "FlyRank Capstone — Usage Metering & Billing Engine",
+    subtitle: "High-Throughput Token Metering & Stripe Webhook Pipeline",
+    category: "Backend & Cloud Systems",
+    stack: ["Node.js", "Express", "PostgreSQL", "Stripe API", "Docker"],
+    description: "A backend service that tracks billable API calls and AI token usage, enforces tenant-based quotas, and calculates usage costs.",
+    features: [
+      "Idempotency-based usage recording preventing double-billing on client retries.",
+      "Per-tenant quota enforcement responding with deterministic 402/429 limits.",
+      "Live usage and cost rollup API calculating tier-based pricing.",
+      "Cryptographic Stripe webhook integration with signature validation.",
+      "Event deduplication pipeline ensuring forged payloads are rejected.",
+      "Multi-container deployment orchestrated via Docker Compose and seed scripts."
+    ],
+    githubUrl: "https://github.com/rdivyatej-cloud/flyrank-capstone-metering-billing",
+    image: "./images/project-flyrank.png",
+    highlightColor: "#00e5ff"
   },
   {
-    id: "ai-llm-integration",
-    doorNumber: "02",
-    title: "AI / LLM Integration",
-    subtitle: "Generative AI Workflows & Token Economy",
-    description: "Integrating LLMs (Gemini) into production workflows with cost-aware token pricing (cached, reasoning, output) and insight pipelines.",
-    accent: "#38bdf8",
-    highlightedStack: ["Google GenAI SDK", "Gemini", "Token Tier Metering", "Prompt Engineering"],
-    keyStrengths: ["Multi-tier Token Pricing", "Automated Financial Analysis", "Context Optimization", "Prompt Chaining"]
+    number: "02",
+    id: "smart-expense-tracker",
+    title: "Smart Expense Tracker",
+    subtitle: "AI-Powered Financial Insights & Report Generation",
+    category: "Full-Stack & Generative AI",
+    stack: ["Node.js", "Express", "PostgreSQL", "JWT", "Gemini AI", "PDFKit", "Docker"],
+    description: "A full-stack expense management application with secure authentication, expense tracking, financial dashboards, and AI-powered spending insights.",
+    features: [
+      "JWT authentication paired with bcrypt password hashing and protected endpoints.",
+      "Comprehensive expense CRUD operations with category-based rollups.",
+      "Gemini AI prompt pipeline providing monthly financial habit suggestions.",
+      "Automated monthly summary generation scheduled via node-cron.",
+      "Downloadable statement reports rendered server-side via PDFKit.",
+      "Dockerized PostgreSQL instance with indexed relational schemas."
+    ],
+    githubUrl: "https://github.com/rdivyatej-cloud/10x-flyrank",
+    image: "./images/project-expense-tracker.png",
+    highlightColor: "#38bdf8"
   },
   {
-    id: "full-stack-apps",
-    doorNumber: "03",
-    title: "Full-Stack Apps",
-    subtitle: "Interactive Dashboards & Web Systems",
-    description: "End-to-end applications with modern frontend frameworks (React, Vite, Next.js) backed by automated scheduled services and reporting.",
-    accent: "#f59e0b",
-    highlightedStack: ["React", "Next.js", "Vite", "Recharts", "Node.js", "MongoDB"],
-    keyStrengths: ["Spend Analytics Dashboards", "Automated Cron Scheduling", "State Isolation", "PDF Generation"]
+    number: "03",
+    id: "subscript",
+    title: "SubScript — Subscription Optimization & Cost Analyzer",
+    subtitle: "Recurring Expense Intelligence & Renewal Alerter",
+    category: "Full-Stack Web Application",
+    stack: ["React", "Vite", "Recharts", "Node.js", "Express", "MongoDB", "JWT", "Nodemailer"],
+    description: "A subscription management platform designed to help users understand, track, and optimize recurring expenses.",
+    features: [
+      "MERN stack architecture with JWT auth and user-isolated collection queries.",
+      "Interactive spend analytics dashboard built with Recharts.",
+      "Automated renewal reminders sent 1, 3, and 7 days prior via Nodemailer.",
+      "Real-time budget-overrun detection and alert triggers.",
+      "Smart duplicate subscription detection algorithm.",
+      "One-click CSV financial export for personal accounting."
+    ],
+    githubUrl: "https://github.com/rdivyatej-cloud/SubScript",
+    image: "./images/project-subscript.png",
+    highlightColor: "#60a5fa"
   },
   {
-    id: "cybersecurity",
-    doorNumber: "04",
-    title: "Secure Software & Cybersecurity",
-    subtitle: "Signature Verification & Defense-in-Depth",
-    description: "Built-in security hygiene including Stripe cryptographic webhook verification, bcrypt hashing, JWT auth, and forged payload detection.",
-    accent: "#10b981",
-    highlightedStack: ["Cryptographic Signatures", "JWT", "Bcrypt", "RBAC", "Network Defense"],
-    keyStrengths: ["Webhook Signature Verification", "Rate & Quota Limiting (429/402)", "Tamper Resistance", "Cisco Certified"]
+    number: "04",
+    id: "study-mate",
+    title: "Study-Mate — AI-Powered Study Assistant",
+    subtitle: "Contextual Academic Interaction Engine",
+    category: "Applied AI & Frontend",
+    stack: ["Next.js", "TypeScript", "React", "Gemini AI"],
+    description: "An AI-powered study application that helps students process, summarize, and interact with learning materials.",
+    features: [
+      "Context-aware academic summarization powered by Google Gemini models.",
+      "Interactive Q&A engine analyzing long-form lecture materials.",
+      "Modular Next.js and TypeScript frontend with zero-latency streaming responses.",
+      "Streamlined UI crafted for focused study sessions and review note generation."
+    ],
+    githubUrl: "https://github.com/rdivyatej-cloud/Study-Mate",
+    image: "./images/project-studymate.png",
+    highlightColor: "#818cf8"
+  },
+  {
+    number: "05",
+    id: "fitlife-pulse",
+    title: "FitLife Pulse — Gym Membership & Progress Analytics",
+    subtitle: "High-Performance Member Progression Engine",
+    category: "Data Structures & Python Core",
+    stack: ["Python", "NumPy", "Pandas", "OOP", "Data Structures"],
+    description: "A Python-based gym management system covering member registration, trainer workload, workout planning, attendance tracking, and analytics.",
+    features: [
+      "Object-Oriented Architecture organizing members, trainers, and workout routines.",
+      "Data structures tracking daily trainer workloads and scheduling constraints.",
+      "Recursive calorie burn aggregation across custom fitness routines.",
+      "Pandas & NumPy data analysis generating attendance and retention breakdowns."
+    ],
+    githubUrl: "https://github.com/rdivyatej-cloud/FitLifePulse",
+    image: "./images/project-fitlife.png",
+    highlightColor: "#34d399"
   }
 ];
 
 export const TIMELINE: TimelineEntry[] = [
   {
     period: "2026",
-    title: "Backend & AI Engineering Intern",
+    role: "Backend & AI Engineering Intern",
     organization: "FlyRank AI",
+    type: "experience",
     badge: "Internship",
-    description:
-      "Built backend and AI-integrated features in Python, Node.js and REST APIs; input validation and API error handling; worked with Git/GitHub workflows, testing, documentation and Docker environments; delivered the Usage Metering & Billing Engine capstone.",
-    tags: ["Python", "Node.js", "REST APIs", "Docker", "Stripe API", "AI Metering"],
-    notes: "TODO: exact dates"
-  },
-  {
-    period: "2022 — 2024",
-    title: "Intermediate (MPC)",
-    organization: "Sri Chaitanya, Hormavu, Bangalore",
-    badge: "Pre-University",
-    description:
-      "Mathematics, Physics, and Chemistry (MPC) preparatory curriculum with focused foundation in higher mathematical analytical thinking and scientific problem-solving.",
-    tags: ["Mathematics", "Physics", "Chemistry", "Analytical Problem Solving"]
+    details: [
+      "Worked on backend and AI-integrated engineering projects using Python, Node.js, and REST APIs.",
+      "Implemented structured input validation, defensive middleware, and robust API error handling.",
+      "Integrated AI model and API capabilities into production application workflows.",
+      "Designed and developed the Usage Metering & Billing Engine for SaaS multi-tenant billing.",
+      "Collaborated using Git, GitHub workflows, Docker containerization, automated testing, and technical documentation."
+    ]
   },
   {
     period: "2024 — 2028",
-    title: "B.Tech in Computer Science Engineering (Cybersecurity)",
-    organization: "SRM University-AP",
-    badge: "Education",
-    description:
-      "Undergraduate coursework with specialization in Cybersecurity, Computer Science foundations, Data Structures & Algorithms, Object-Oriented Programming, and Database Management Systems.",
-    tags: ["Data Structures", "OOP", "Database Design", "Cybersecurity", "Operating Systems"]
+    role: "B.Tech in Computer Science Engineering (Cybersecurity)",
+    organization: "SRM University–AP",
+    type: "education",
+    badge: "Undergraduate",
+    details: [
+      "Current CGPA: 7.5",
+      "Specialization coursework in Cybersecurity, Network Security, and Defensive Architecture.",
+      "Core CS foundations: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, and System Design."
+    ]
   },
   {
-    period: "2023 — 2025",
-    title: "Professional Certifications",
-    organization: "Cisco, Google & Infosys",
-    badge: "Certifications",
-    description:
-      "Intro to Cybersecurity (Cisco, 2023); Google Analytics (Google, 2024); Cybersecurity & Prompt Engineering (Infosys Springboard, 2025).",
-    tags: ["Intro to Cybersecurity (Cisco)", "Google Analytics (Google)", "Cybersecurity & Prompt Eng (Infosys)"]
-  },
-  {
-    period: "Ongoing",
-    title: "Competitive Problem Solving & Hackathons",
-    organization: "LeetCode, HackerRank & Technical Events",
-    badge: "Milestones",
-    description:
-      "100+ programming problems solved on LeetCode and HackerRank; actively participating in college technical events and hackathons.",
-    tags: ["100+ Problems", "LeetCode", "HackerRank", "Algorithms", "Hackathons"]
+    period: "2022 — 2024",
+    role: "Intermediate (MPC)",
+    organization: "Sri Chaitanya, Hormavu, Bangalore",
+    type: "education",
+    badge: "Pre-University",
+    details: [
+      "Completed higher secondary studies in Mathematics, Physics, and Chemistry (MPC).",
+      "Rigorous problem-solving curriculum building a strong mathematical and logical foundation."
+    ]
   }
 ];
 
-export const PROJECTS: Project[] = [
+export const SKILL_GROUPS: SkillGroup[] = [
   {
-    id: "flyrank-capstone",
-    title: "FlyRank Capstone: Usage Metering & Billing Engine",
-    category: "Backend & AI Systems",
-    stack: ["Node.js", "Express", "PostgreSQL", "Stripe API", "Docker"],
-    image: "./images/project-flyrank.png",
-    description: [
-      "Meters billable actions (API calls and AI tokens) and enforces per-tenant quota limits, pricing usage across cached, reasoning and output token types.",
-      "Idempotency-key-based usage recording so retried requests return the original result instead of double-billing; /usage rollup endpoint returns live usage, limit and cost.",
-      "Stripe webhooks (test mode) with signature verification and event deduplication to auto-provision plan upgrades; forged payloads rejected with a 400.",
-      "Quota limits enforced with 402/429 responses; containerized with Docker Compose and a seed script for demo data."
-    ],
-    githubUrl: "https://github.com/rdivyatej-cloud/flyrank-capstone-metering-billing",
-    doorCategories: ["backend-engineering", "ai-llm-integration", "cybersecurity"],
-    featured: true
-  },
-  {
-    id: "smart-expense-tracker",
-    title: "Smart Expense Tracker",
-    category: "AI Backend & Analytics",
-    stack: [
-      "Node.js",
-      "Express",
-      "PostgreSQL",
-      "JWT",
-      "bcrypt",
-      "Google GenAI SDK (Gemini)",
-      "pdfkit",
-      "node-cron",
-      "Docker"
-    ],
-    image: "./images/project-expense-tracker.png",
-    description: [
-      "JWT authentication with bcrypt-hashed passwords and protected REST endpoints for expenses with category-based summaries.",
-      "AI-powered spending insights from monthly transaction data using Gemini.",
-      "Monthly summary generation via node-cron and downloadable PDF reports via pdfkit.",
-      "MVC-inspired backend structure (routes, controllers, services, database, jobs) on a Dockerized PostgreSQL instance."
-    ],
-    githubUrl: "https://github.com/rdivyatej-cloud/10x-flyrank",
-    doorCategories: ["backend-engineering", "ai-llm-integration", "cybersecurity", "full-stack-apps"],
-    featured: true
-  },
-  {
-    id: "subscript",
-    title: "SubScript: Subscription Optimization & Cost Analyzer",
-    category: "Full-Stack MERN",
-    stack: [
-      "React",
-      "Vite",
-      "Recharts",
-      "Node.js",
-      "Express",
-      "MongoDB (Mongoose)",
-      "JWT",
-      "node-cron",
-      "Nodemailer"
-    ],
-    image: "./images/project-subscript.png",
-    description: [
-      "MERN app for tracking recurring subscriptions with JWT auth and user-isolated data.",
-      "Recharts dashboard of costs by category and monthly-vs-yearly spend.",
-      "node-cron renewal reminders at 1/3/7 days via in-app and email alerts.",
-      "Budget-overrun alerts, duplicate-category detection and CSV export."
-    ],
-    githubUrl: "https://github.com/rdivyatej-cloud/SubScript",
-    doorCategories: ["full-stack-apps", "cybersecurity"],
-    featured: true
-  },
-  {
-    id: "study-mate",
-    title: "Study-Mate: AI-Powered Study Assistant",
-    category: "AI Web Application",
-    stack: ["Next.js", "TypeScript", "React", "Gemini AI"],
-    image: "./images/project-studymate.png",
-    description: [
-      "Web app integrating Google Gemini to help students process and interact with study material; modular front-end architecture with documented build process."
-    ],
-    githubUrl: "https://github.com/rdivyatej-cloud/Study-Mate",
-    doorCategories: ["ai-llm-integration", "full-stack-apps"],
-    featured: false
-  },
-  {
-    id: "fitlife-pulse",
-    title: "FitLife Pulse: Gym Membership & Progress Analytics",
-    category: "Python Analytics & OOP",
-    stack: ["Python", "NumPy", "Pandas", "OOP", "Data Structures"],
-    image: "./images/project-fitlife.png",
-    description: [
-      "Management system for member registration, trainer workload, workout plans and attendance; recursive calorie aggregation and attendance-based member classification with analytics reports."
-    ],
-    githubUrl: "https://github.com/rdivyatej-cloud/FitLifePulse",
-    doorCategories: ["backend-engineering"],
-    featured: false
-  }
-];
-
-export const SKILL_CATEGORIES: SkillCategory[] = [
-  {
-    title: "Languages",
+    category: "Languages",
+    description: "Core programming and query languages used for systems, scripting, and web.",
     skills: ["Python", "JavaScript", "C++", "C", "SQL", "HTML", "CSS"]
   },
   {
-    title: "Backend & APIs",
+    category: "Backend & APIs",
+    description: "Architecting reliable, high-throughput, and clean RESTful microservices.",
     skills: ["Node.js", "Express.js", "REST APIs", "API Development", "MVC Architecture"]
   },
   {
-    title: "Databases",
-    skills: ["PostgreSQL", "SQL", "MySQL", "MongoDB", "Database Design"]
+    category: "Databases",
+    description: "Relational and document storage design with schema optimization.",
+    skills: ["PostgreSQL", "MySQL", "MongoDB", "Database Design"]
   },
   {
-    title: "AI & Engineering",
-    skills: ["Generative AI", "LLM Integration", "Prompt Engineering"]
+    category: "AI & Engineering",
+    description: "Deploying generative AI APIs, prompt workflows, and token economics.",
+    skills: ["Artificial Intelligence", "Generative AI", "LLM Integration", "Prompt Engineering"]
   },
   {
-    title: "Tools & DevOps",
+    category: "Tools & DevOps",
+    description: "Containerization, version control, build workflows, and modern toolchains.",
     skills: ["Docker", "Git", "GitHub", "Vite", "VS Code"]
   },
   {
-    title: "CS Foundations",
-    skills: ["Data Structures & Algorithms", "OOP", "System Design", "Cybersecurity"]
+    category: "Computer Science",
+    description: "Theoretical and architectural foundations of robust software engineering.",
+    skills: ["Data Structures & Algorithms", "OOP", "System Design", "Relational Algebra", "Cybersecurity"]
   }
 ];
 
-export const CONTACT_REASONS = [
-  { id: "role", label: "Internship / full-time role", subjectPrefix: "[Opportunity]" },
-  { id: "freelance", label: "Freelance project", subjectPrefix: "[Project]" },
-  { id: "collab", label: "Collaboration", subjectPrefix: "[Collab]" },
-  { id: "hi", label: "Just saying hi", subjectPrefix: "[Hello]" }
+export const CERTIFICATIONS: Certification[] = [
+  {
+    title: "Cybersecurity & Prompt Engineering",
+    issuer: "Infosys Springboard",
+    year: "2025"
+  },
+  {
+    title: "Introduction to Cybersecurity",
+    issuer: "Cisco",
+    year: "2023"
+  },
+  {
+    title: "Google Analytics",
+    issuer: "Google",
+    year: "2024"
+  }
+];
+
+export const ACHIEVEMENTS = [
+  "Solved 100+ programming problems across LeetCode and HackerRank.",
+  "Active participant in university technical events, coding hackathons, and systems challenges.",
+  "Designed and delivered production-grade Usage Metering & Billing Engine during FlyRank AI internship."
 ];
 
 export const NAV_LINKS = [
-  { name: "Home", href: "#hero" },
-  { name: "Work", href: "#doors" },
+  { name: "Home", href: "#home" },
   { name: "Projects", href: "#projects" },
-  { name: "My story", href: "#story" },
+  { name: "Experience", href: "#experience" },
+  { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" }
 ];

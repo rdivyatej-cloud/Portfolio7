@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { PERSONAL_INFO } from '../data/content';
 import { Shield, Cpu, Terminal } from 'lucide-react';
 
 const CardMesh: React.FC = () => {
@@ -32,7 +31,7 @@ const CardMesh: React.FC = () => {
         {/* Outer glowing edge ring */}
         <lineSegments>
           <edgesGeometry args={[new THREE.BoxGeometry(3.22, 4.62, 0.082)]} />
-          <lineBasicMaterial color="#ccff00" linewidth={1.5} transparent opacity={0.6} />
+          <lineBasicMaterial color="#00e5ff" linewidth={1.5} transparent opacity={0.6} />
         </lineSegments>
 
         {/* High-Fidelity Embedded HTML Card Face */}
@@ -43,12 +42,12 @@ const CardMesh: React.FC = () => {
           distanceFactor={3.2}
           className="select-none pointer-events-none"
         >
-          <div className="w-[320px] h-[460px] bg-gradient-to-b from-[#1c1815] via-[#14110f] to-[#110e0c] rounded-2xl border border-[#ccff00]/30 p-6 flex flex-col justify-between text-[#f4f0eb] shadow-[0_0_40px_rgba(204,255,0,0.15)] overflow-hidden">
+          <div className="w-[320px] h-[460px] bg-gradient-to-b from-[#1c1815] via-[#14110f] to-[#110e0c] rounded-2xl border border-[#00e5ff]/30 p-6 flex flex-col justify-between text-[#f4f0eb] shadow-[0_0_40px_rgba(0,229,255,0.15)] overflow-hidden">
             
             {/* Card Header */}
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
-                <div className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-[#ccff00] font-bold">
+                <div className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-[#00e5ff] font-bold">
                   <Shield className="w-3.5 h-3.5" />
                   <span>SRM UNIVERSITY-AP</span>
                 </div>
@@ -59,18 +58,18 @@ const CardMesh: React.FC = () => {
 
               {/* Photo / Avatar & Status */}
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#26211c] to-[#14110f] border-2 border-[#ccff00] flex items-center justify-center text-[#ccff00] font-mono font-bold text-xl shadow-[0_0_15px_rgba(204,255,0,0.3)]">
-                  DR
+                <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-[#00e5ff] shadow-[0_0_15px_rgba(0,229,255,0.3)] flex items-center justify-center bg-[#1c1815]">
+                  <img src="./images/profile.jpg" alt="Divyatej Rallapalli" className="w-full h-full object-cover" />
                 </div>
                 <div className="space-y-0.5">
                   <div className="text-[10px] font-mono text-[#9e9891] uppercase tracking-wider">
                     Engineer Pass
                   </div>
                   <div className="text-sm font-bold tracking-tight text-[#f4f0eb] leading-tight">
-                    {PERSONAL_INFO.name}
+                    Divyatej Rallapalli
                   </div>
-                  <div className="inline-flex items-center gap-1 text-[9px] font-mono text-[#ccff00]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00] animate-pulse" />
+                  <div className="inline-flex items-center gap-1 text-[9px] font-mono text-[#00e5ff]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
                     <span>LEVEL 01 CLEARANCE</span>
                   </div>
                 </div>
@@ -79,7 +78,7 @@ const CardMesh: React.FC = () => {
               {/* Role & Specialization */}
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-1 mb-4">
                 <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#f4f0eb]">
-                  <Terminal className="w-3 h-3 text-[#ccff00]" />
+                  <Terminal className="w-3 h-3 text-[#00e5ff]" />
                   <span>Backend &amp; AI Engineer</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[9px] font-mono text-[#9e9891]">

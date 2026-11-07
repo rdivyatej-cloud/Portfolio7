@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PERSONAL_INFO } from '../data/content';
 import { ArrowRight, Shield, Terminal, Cpu, FastForward } from 'lucide-react';
+import { PERSONAL } from '../data/content';
 
 // Lazy load the 3D Canvas so it doesn't block initial rendering
 const ThreeIDCard = lazy(() => import('./ThreeIDCard'));
@@ -69,19 +69,19 @@ export const LoaderOverlay: React.FC<LoaderOverlayProps> = ({ onComplete }) => {
       className="fixed inset-0 z-50 bg-[#14110f] flex flex-col items-center justify-between p-6 sm:p-10 select-none overflow-hidden"
     >
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ccff00]/6 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00e5ff]/6 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Top Bar: Security clearance & Skip option */}
       <div className="w-full max-w-5xl flex items-center justify-between text-xs font-mono text-[#9e9891] relative z-10">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-[#00e5ff] animate-ping" />
           <span className="text-[#f4f0eb]">ENGINEER CREDENTIALS // SYSTEM LOAD</span>
         </div>
 
         <button
           type="button"
           onClick={onComplete}
-          className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-xs font-mono text-[#9e9891] hover:text-[#ccff00] border border-white/5 transition-all cursor-pointer"
+          className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-xs font-mono text-[#9e9891] hover:text-[#00e5ff] border border-white/5 transition-all cursor-pointer"
           aria-label="Skip introduction"
         >
           <span>Skip [ESC]</span>
@@ -116,19 +116,19 @@ export const LoaderOverlay: React.FC<LoaderOverlayProps> = ({ onComplete }) => {
               </div>
 
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#26211c] to-[#14110f] border-2 border-[#ccff00] flex items-center justify-center text-[#ccff00] font-mono font-bold text-xl shadow-[0_0_15px_rgba(204,255,0,0.3)]">
-                  DR
+                <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-[#00e5ff] flex items-center justify-center bg-[#14110f] shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+                  <img src="./images/profile.jpg" alt="Divyatej Rallapalli" className="w-full h-full object-cover" />
                 </div>
                 <div className="space-y-0.5">
                   <div className="text-[10px] font-mono text-[#9e9891] uppercase">Engineer Pass</div>
-                  <div className="text-sm font-bold text-[#f4f0eb]">{PERSONAL_INFO.name}</div>
-                  <div className="text-[9px] font-mono text-[#ccff00]">LEVEL 01 CLEARANCE</div>
+                  <div className="text-sm font-bold text-[#f4f0eb]">{PERSONAL.name}</div>
+                  <div className="text-[9px] font-mono text-[#00e5ff]">LEVEL 01 CLEARANCE</div>
                 </div>
               </div>
 
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-1">
                 <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#f4f0eb]">
-                  <Terminal className="w-3 h-3 text-[#ccff00]" />
+                  <Terminal className="w-3 h-3 text-[#00e5ff]" />
                   <span>Backend &amp; AI Engineer</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[9px] font-mono text-[#9e9891]">
@@ -159,12 +159,12 @@ export const LoaderOverlay: React.FC<LoaderOverlayProps> = ({ onComplete }) => {
         <div className="w-full space-y-2">
           <div className="flex items-center justify-between font-mono text-xs text-[#9e9891]">
             <span>INITIALIZING ENVIRONMENT</span>
-            <span className="text-[#ccff00] font-bold">{progress}%</span>
+            <span className="text-[#00e5ff] font-bold">{progress}%</span>
           </div>
 
           <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-[#ccff00] shadow-[0_0_10px_#ccff00]"
+              className="h-full bg-[#00e5ff] shadow-[0_0_10px_#00e5ff]"
               style={{ width: `${progress}%` }}
               transition={{ ease: 'easeOut', duration: 0.1 }}
             />
@@ -181,10 +181,10 @@ export const LoaderOverlay: React.FC<LoaderOverlayProps> = ({ onComplete }) => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 onClick={onComplete}
-                className="px-8 py-3.5 rounded-full text-sm font-mono font-bold bg-[#ccff00] text-[#14110f] hover:bg-[#d9ff33] hover:shadow-[0_0_35px_rgba(204,255,0,0.45)] transition-all duration-300 flex items-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
+                className="px-8 py-3.5 rounded-full text-sm font-mono font-bold bg-[#00e5ff] text-[#09090b] hover:bg-[#33ebff] hover:shadow-[0_0_35px_rgba(0,229,255,0.45)] transition-all duration-300 flex items-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
               >
                 <span>Click to enter</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#09090b]" />
               </motion.button>
             ) : (
               <motion.span

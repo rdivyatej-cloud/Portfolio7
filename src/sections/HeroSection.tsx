@@ -1,198 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PERSONAL_INFO } from '../data/content';
-import { useISTClock } from '../hooks/useISTClock';
-import { useFileExists } from '../hooks/useFileExists';
-import { SafeImage } from '../components/SafeImage';
-import { ArrowDown, ArrowUpRight, Clock, FileDown, Sparkles } from 'lucide-react';
-
-const ROLES = [
-  "Backend Engineer",
-  "AI Engineer",
-  "Cybersecurity"
-];
+import React from 'react';
+import { motion } from 'framer-motion';
+import { PERSONAL } from '../data/content';
+import { ArrowDown, ArrowUpRight, Terminal } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const istTime = useISTClock();
-  const cvExists = useFileExists(PERSONAL_INFO.resumePath);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
     <section
-      id="hero"
-      className="relative min-h-[92vh] flex flex-col justify-between pt-8 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden"
+      id="home"
+      className="relative min-h-screen flex flex-col justify-between pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden"
     >
-      {/* Background ambient radial lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-[#ccff00]/6 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="absolute -bottom-10 right-10 w-[400px] h-[300px] bg-amber-500/5 rounded-full blur-[130px] pointer-events-none -z-10" />
+      {/* Background ambient radial gradients & fine grid */}
+      <div className="absolute top-1/4 right-1/4 w-[550px] h-[350px] bg-[#00e5ff]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 left-10 w-[450px] h-[300px] bg-blue-600/4 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.02] pointer-events-none -z-10" />
 
-      {/* Top Meta Bar: Availability + Live IST Clock */}
+      {/* Top Meta Line: Editorial Sub-header */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex flex-wrap items-center justify-between gap-4 py-3 border-b border-white/5 font-mono text-xs text-[#9e9891]"
+        transition={{ duration: 0.7 }}
+        className="flex flex-wrap items-center justify-between gap-4 py-3 border-b border-white/[0.08] font-mono text-xs text-[#9e9e9e]"
       >
-        {/* Availability Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 hover:border-[#ccff00]/30 transition-colors">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ccff00] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ccff00]"></span>
+        <div className="flex items-center gap-3">
+          <span className="text-[#ededed] font-bold tracking-widest uppercase">
+            {PERSONAL.name}
           </span>
-          <span className="text-[#f4f0eb] tracking-tight">{PERSONAL_INFO.availability}</span>
+          <span className="text-[#666666]">/</span>
+          <span className="text-[#00e5ff] tracking-wider uppercase">
+            {PERSONAL.roleHeadline}
+          </span>
         </div>
 
-        {/* Live IST Clock & Location */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
-          <Clock className="w-3.5 h-3.5 text-[#ccff00]" />
-          <span>{istTime || 'Loading IST...'}</span>
-          <span className="text-[#6e6761]">•</span>
-          <span className="text-[#9e9891]">{PERSONAL_INFO.location}</span>
+        {/* Clean status indicator without false claims */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e5ff] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e5ff]" />
+          </span>
+          <span className="text-[#9e9e9e] text-[11px] font-mono">
+            {PERSONAL.contact.statusText}
+          </span>
         </div>
       </motion.div>
 
-      {/* Main Hero Centerpiece */}
-      <div className="my-auto py-10 sm:py-16">
+      {/* Main Editorial Hero Centerpiece */}
+      <div className="my-auto py-12 sm:py-20 max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-6 max-w-4xl"
+          transition={{ duration: 0.9, delay: 0.15 }}
+          className="space-y-8"
         >
-          {/* Profile snippet with stylish avatar fallback */}
-          <div className="flex items-center gap-4">
-            <SafeImage
-              src={PERSONAL_INFO.profileImage}
-              alt="Divyatej Rallapalli profile"
-              fallbackType="profile"
-              width={56}
-              height={56}
-              className="w-14 h-14 rounded-full object-cover border-2 border-[#ccff00]/40 shadow-[0_0_20px_rgba(204,255,0,0.2)]"
-            />
-            <div className="flex flex-col">
-              <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#ccff00]">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Divyatej Rallapalli</span>
-              </div>
-              <span className="text-xs font-mono text-[#9e9891]">
-                Backend &amp; AI Engineer • {PERSONAL_INFO.location}
-              </span>
-            </div>
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.02] border border-white/[0.08] text-xs font-mono text-[#9e9e9e]">
+            <Terminal className="w-3.5 h-3.5 text-[#00e5ff]" />
+            <span>Systems Architecture • AI Integration • Cybersecurity</span>
           </div>
 
-          {/* Primary Cinematic Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#f4f0eb] leading-[1.08]">
-            Hi, I'm <span className="text-[#f4f0eb] underline decoration-[#ccff00]/40 decoration-4 underline-offset-8">Divyatej</span>.
+          {/* Large Main Editorial Headline */}
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-[#ededed] leading-[1.02]">
+            I build systems.
             <br />
-            I build reliable{' '}
-            <span className="text-[#f4f0eb]">backend systems</span> and{' '}
-            <span className="text-[#f4f0eb]">AI-powered products</span>.
+            <span className="text-[#00e5ff] underline decoration-[#00e5ff]/20 decoration-2 underline-offset-8">
+              I engineer intelligence.
+            </span>
           </h1>
 
-          {/* Rotating Role Ticker */}
-          <div className="flex items-center gap-3 pt-2">
-            <span className="font-mono text-base sm:text-xl text-[#9e9891]">Specializing in:</span>
-            <div className="relative h-9 sm:h-11 overflow-hidden min-w-[240px] sm:min-w-[320px]">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roleIndex}
-                  initial={{ y: 28, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -28, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute font-mono text-base sm:text-xl font-bold px-3 py-1 rounded bg-white/5 border border-white/10 text-[#ccff00]"
-                >
-                  &gt; {ROLES[roleIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* Brief Bio / Summary snippet */}
-          <p className="text-base sm:text-lg text-[#9e9891] max-w-2xl font-normal leading-relaxed pt-2">
-            Computer Science (Cybersecurity) undergraduate at {PERSONAL_INFO.university} with experience from FlyRank AI building scalable REST APIs, token metering engines, and secure architectures.
+          {/* Supporting Text */}
+          <p className="text-lg sm:text-2xl text-[#9e9e9e] max-w-3xl font-normal leading-relaxed pt-2">
+            {PERSONAL.supportingText}
           </p>
 
-          {/* Action CTAs */}
+          {/* Introduction snippet */}
+          <p className="text-sm sm:text-base text-[#666666] max-w-2xl font-mono leading-relaxed">
+            {PERSONAL.introduction}
+          </p>
+
+          {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-4 pt-4">
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('contact');
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-mono font-semibold bg-[#ccff00] text-[#14110f] hover:bg-[#d9ff33] hover:shadow-[0_0_30px_rgba(204,255,0,0.35)] transition-all duration-300 transform hover:-translate-y-0.5"
+            <button
+              type="button"
+              onClick={() => scrollTo('projects')}
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-mono font-semibold bg-[#00e5ff] text-[#09090b] hover:bg-[#33ebff] hover:shadow-[0_0_30px_rgba(0,229,255,0.35)] transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
             >
-              <span>Hire me</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
+              <span>Explore My Work</span>
+              <ArrowDown className="w-4 h-4 text-[#09090b]" />
+            </button>
 
-            <a
-              href="#doors"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('doors');
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-mono font-medium text-[#f4f0eb] bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 transition-all duration-300"
+            <button
+              type="button"
+              onClick={() => scrollTo('contact')}
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-mono font-medium text-[#ededed] bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#00e5ff]/40 transition-all duration-300 cursor-pointer"
             >
-              <span>See my work</span>
-              <ArrowDown className="w-4 h-4 text-[#ccff00]" />
-            </a>
-
-            {/* Download CV button - only shown when file exists */}
-            {cvExists && (
-              <a
-                href={PERSONAL_INFO.resumePath}
-                download="Divyatej_Rallapalli_CV.pdf"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-mono font-medium text-[#9e9891] hover:text-[#f4f0eb] bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 transition-all duration-300"
-              >
-                <FileDown className="w-4 h-4 text-[#ccff00]" />
-                <span>Download CV</span>
-              </a>
-            )}
+              <span>Get In Touch</span>
+              <ArrowUpRight className="w-4 h-4 text-[#00e5ff]" />
+            </button>
           </div>
         </motion.div>
       </div>
 
-      {/* Bottom Cue: Scroll to explore */}
+      {/* Bottom Editorial Bar & Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="flex items-center justify-between border-t border-white/5 pt-6 text-xs font-mono text-[#6e6761]"
+        className="flex items-center justify-between border-t border-white/[0.08] pt-6 text-xs font-mono text-[#666666]"
       >
-        <div className="hidden sm:flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00]"></span>
-          <span>B.Tech CSE (Cybersecurity) @ SRM-AP</span>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff]" />
+          <span>{PERSONAL.education.institution} • {PERSONAL.education.degree}</span>
         </div>
 
         <button
-          onClick={() => scrollToSection('doors')}
-          className="group mx-auto sm:mx-0 flex items-center gap-2.5 text-[#9e9891] hover:text-[#ccff00] transition-colors cursor-pointer"
-          aria-label="Scroll to explore work"
+          onClick={() => scrollTo('projects')}
+          className="group flex items-center gap-2 text-[#9e9e9e] hover:text-[#00e5ff] transition-colors cursor-pointer"
+          aria-label="Scroll to explore projects"
         >
           <span>Scroll to explore</span>
-          <span className="w-6 h-6 rounded-full border border-white/10 group-hover:border-[#ccff00] flex items-center justify-center transition-colors">
-            <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform text-[#ccff00]" />
+          <span className="w-6 h-6 rounded-full border border-white/10 group-hover:border-[#00e5ff] flex items-center justify-center transition-colors">
+            <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform text-[#00e5ff]" />
           </span>
         </button>
 
-        <div className="hidden sm:block text-[#6e6761]">
-          <span>[ 01 / 05 ] Overview</span>
+        <div className="hidden sm:block">
+          <span>[ 01 / 05 ] Showcase</span>
         </div>
       </motion.div>
     </section>

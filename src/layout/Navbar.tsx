@@ -1,50 +1,84 @@
-import React, { useState } from 'react';
-import { PERSONAL_INFO, NAV_LINKS } from '../data/content';
+import React, { useState, useEffect } from 'react';
+import { PERSONAL, NAV_LINKS } from '../data/content';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
-  const handleNavClick = (href: string) => {
-    setMobileMenuOpen(false);
-    if (isHomePage && href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const sections = ['home', 'projects', 'experience', 'about', 'contact'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
       }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-[#14110f]/85 backdrop-blur-md border-b border-white/5 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#09090b]/85 backdrop-blur-md border-b border-white/[0.08] py-4'
+          : 'bg-transparent py-6'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand / Logo */}
-        <Link 
-          to="/"
-          className="group flex items-center gap-2.5 text-[#f4f0eb] hover:text-[#ccff00] transition-colors"
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, '#home')}
+          className="group flex items-center gap-3 text-[#ededed] hover:text-[#00e5ff] transition-colors"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ccff00] animate-pulse"></span>
-          <span className="font-mono text-sm tracking-wider uppercase font-semibold">
-            {PERSONAL_INFO.name}
+          <span className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_8px_#00e5ff]" />
+          <span className="font-mono text-xs sm:text-sm tracking-widest uppercase font-semibold text-[#ededed]">
+            {PERSONAL.name}
           </span>
-          <span className="hidden sm:inline-block font-mono text-xs text-[#9e9891] px-2 py-0.5 rounded bg-white/5 border border-white/5">
-            Backend &amp; AI
+          <span className="hidden md:inline-block font-mono text-[10px] text-[#666666] uppercase tracking-wider px-2 py-0.5 rounded bg-white/[0.03] border border-white/5">
+            {PERSONAL.roleHeadline}
           </span>
-        </Link>
+        </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-[#121215]/80 border border-white/[0.08] backdrop-blur-md">
           {NAV_LINKS.map((link) => {
-            const targetHref = isHomePage ? link.href : `/${link.href}`;
+            const isActive = activeSection === link.href.replace('#', '');
             return (
               <a
                 key={link.name}
-                href={targetHref}
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm font-mono text-[#9e9891] hover:text-[#f4f0eb] transition-colors relative py-1 hover:after:w-full after:w-0 after:h-[2px] after:bg-[#ccff00] after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-300"
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-white/10 text-[#00e5ff] shadow-[0_0_12px_rgba(0,229,255,0.2)]'
+                    : 'text-[#9e9e9e] hover:text-[#ededed] hover:bg-white/[0.03]'
+                }`}
               >
                 {link.name}
               </a>
@@ -52,59 +86,56 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Actions / Hire Me */}
+        {/* Action Button: Get in touch */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href={isHomePage ? "#contact" : "/#contact"}
-            onClick={() => handleNavClick('#contact')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wide bg-[#ccff00] text-[#14110f] hover:bg-[#d8ff33] hover:shadow-[0_0_20px_rgba(204,255,0,0.3)] transition-all duration-300 transform hover:-translate-y-0.5"
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wide bg-white/5 hover:bg-white/10 text-[#ededed] hover:text-[#00e5ff] border border-white/10 hover:border-[#00e5ff]/40 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
           >
-            <span>Hire me</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <span>Get In Touch</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#00e5ff]" />
           </a>
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-3">
           <a
-            href={isHomePage ? "#contact" : "/#contact"}
-            onClick={() => handleNavClick('#contact')}
-            className="px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-[#ccff00] text-[#14110f]"
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-[#00e5ff] text-[#09090b]"
           >
-            Hire me
+            Contact
           </a>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#9e9891] hover:text-white rounded-lg focus:outline-none"
+            className="p-2 text-[#9e9e9e] hover:text-white rounded-lg focus:outline-none"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6 text-[#ccff00]" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-6 h-6 text-[#00e5ff]" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/10 bg-[#14110f]/95 backdrop-blur-xl px-6 py-6 space-y-4">
-          <nav className="flex flex-col space-y-4">
-            {NAV_LINKS.map((link) => {
-              const targetHref = isHomePage ? link.href : `/${link.href}`;
-              return (
-                <a
-                  key={link.name}
-                  href={targetHref}
-                  onClick={() => handleNavClick(link.href)}
-                  className="font-mono text-base text-[#9e9891] hover:text-[#ccff00] transition-colors py-1 border-b border-white/5"
-                >
-                  {link.name}
-                </a>
-              );
-            })}
+        <div className="md:hidden border-b border-white/10 bg-[#09090b]/98 backdrop-blur-2xl px-6 py-6 space-y-4">
+          <nav className="flex flex-col space-y-3">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="font-mono text-sm text-[#9e9e9e] hover:text-[#00e5ff] transition-colors py-2 border-b border-white/5 flex items-center justify-between"
+              >
+                <span>{link.name}</span>
+                <span className="text-[10px] text-[#666666]">#</span>
+              </a>
+            ))}
           </nav>
         </div>
       )}
     </header>
   );
 };
-

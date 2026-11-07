@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Layers, Terminal, Sparkles } from 'lucide-react';
+import { Terminal, Cpu, Database, Layers, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackType?: 'profile' | 'project';
   fallbackText?: string;
   categoryText?: string;
+  accentColor?: string;
 }
 
 export const SafeImage: React.FC<SafeImageProps> = ({
@@ -14,6 +15,7 @@ export const SafeImage: React.FC<SafeImageProps> = ({
   fallbackType = 'project',
   fallbackText,
   categoryText,
+  accentColor = '#00e5ff',
   ...props
 }) => {
   const [hasError, setHasError] = useState(false);
@@ -22,46 +24,70 @@ export const SafeImage: React.FC<SafeImageProps> = ({
     if (fallbackType === 'profile') {
       return (
         <div
-          className={`flex items-center justify-center bg-gradient-to-br from-[#1c1815] to-[#14110f] border border-[#ccff00]/30 text-[#ccff00] font-mono font-bold tracking-wider rounded-full shadow-[0_0_20px_rgba(204,255,0,0.15)] ${className}`}
+          className={`flex items-center justify-center bg-gradient-to-br from-[#16161a] to-[#0c0c0e] border border-white/10 text-[#00e5ff] font-mono font-bold tracking-wider rounded-full shadow-[0_0_20px_rgba(0,229,255,0.15)] ${className}`}
           role="img"
-          aria-label={alt || "Profile photo placeholder"}
+          aria-label={alt || "Profile portrait"}
         >
           <span className="text-xl sm:text-2xl">DR</span>
         </div>
       );
     }
 
-    // Project image fallback
+    // Creative schematic project preview card
+    const getSchematicIcon = () => {
+      if (categoryText?.includes('Backend') || categoryText?.includes('Cloud')) return <Terminal className="w-8 h-8 text-[#00e5ff]" />;
+      if (categoryText?.includes('AI') || categoryText?.includes('Generative')) return <Cpu className="w-8 h-8 text-[#38bdf8]" />;
+      if (categoryText?.includes('Data')) return <Database className="w-8 h-8 text-[#34d399]" />;
+      if (categoryText?.includes('Cybersecurity')) return <ShieldCheck className="w-8 h-8 text-[#818cf8]" />;
+      return <Layers className="w-8 h-8 text-[#60a5fa]" />;
+    };
+
     return (
       <div
-        className={`relative overflow-hidden flex flex-col justify-between p-6 bg-gradient-to-br from-[#1c1815] via-[#14110f] to-[#181512] border border-white/5 rounded-xl ${className}`}
+        className={`relative overflow-hidden flex flex-col justify-between p-6 sm:p-8 bg-gradient-to-br from-[#121215] via-[#0c0c0e] to-[#141418] border border-white/10 rounded-2xl ${className}`}
         role="img"
-        aria-label={alt || "Project placeholder illustration"}
+        aria-label={alt || "Project visual representation"}
       >
-        {/* Subtle grid pattern background */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ccff00_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-32 h-32 bg-[#ccff00]/5 rounded-full blur-2xl pointer-events-none" />
+        {/* Subtle schematic grid background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.04] pointer-events-none" />
+        <div
+          className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-20"
+          style={{ backgroundColor: accentColor }}
+        />
 
+        {/* Top Meta Bar */}
         <div className="relative z-10 flex items-center justify-between">
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#ccff00]">
-            {categoryText || 'ENGINEERING'}
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accentColor }} />
+            <span className="text-[11px] font-mono uppercase tracking-widest text-[#9e9e9e]">
+              {categoryText || 'SYSTEM ARCHITECTURE'}
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-[#666666] px-2 py-0.5 rounded bg-white/[0.03] border border-white/5">
+            PRODUCTION SERVICE
           </span>
-          <Terminal className="w-4 h-4 text-[#9e9891]" />
         </div>
 
-        <div className="relative z-10 my-auto py-6">
-          <Layers className="w-8 h-8 text-[#ccff00]/60 mb-2" />
-          <h4 className="font-mono text-sm font-semibold text-[#f4f0eb] line-clamp-1">
-            {fallbackText || 'System Architecture'}
+        {/* Center Visual Schematic */}
+        <div className="relative z-10 my-auto py-8 space-y-3">
+          <div className="p-3 rounded-xl bg-white/[0.04] border border-white/5 w-fit">
+            {getSchematicIcon()}
+          </div>
+          <h4 className="font-mono text-base sm:text-lg font-bold text-[#ededed] tracking-tight">
+            {fallbackText || 'Distributed System Engine'}
           </h4>
-          <p className="text-[11px] text-[#9e9891] font-mono mt-0.5">
-            Production Service &amp; Implementation
+          <p className="text-xs text-[#9e9e9e] font-mono leading-relaxed line-clamp-2">
+            Idempotent endpoints, containerized pipeline, relational database schema &amp; automated execution.
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-1.5 text-[10px] font-mono text-[#6e6761]">
-          <Sparkles className="w-3 h-3 text-[#ccff00]" />
-          <span>Interactive preview</span>
+        {/* Bottom Status Ticker */}
+        <div className="relative z-10 flex items-center justify-between pt-4 border-t border-white/5 text-[10px] font-mono text-[#666666]">
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-[#00e5ff]" />
+            <span>Interactive Architecture Spec</span>
+          </div>
+          <span>[ VERIFIED REPO ]</span>
         </div>
       </div>
     );
@@ -77,4 +103,3 @@ export const SafeImage: React.FC<SafeImageProps> = ({
     />
   );
 };
-
