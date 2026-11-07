@@ -5,6 +5,7 @@ export interface Project {
   stack: string[];
   description: string[];
   githubUrl: string;
+  image: string;
   doorCategories: ('backend-engineering' | 'ai-llm-integration' | 'full-stack-apps' | 'cybersecurity')[];
   featured?: boolean;
 }
@@ -39,17 +40,21 @@ export const PERSONAL_INFO = {
   name: "Divyatej Rallapalli",
   firstName: "Divyatej",
   lastName: "Rallapalli",
+  initials: "DR",
+  profileImage: "./images/profile.jpg",
+  resumePath: "./resume/Divyatej_Rallapalli_CV.pdf",
   roles: [
     "Backend Engineer",
     "AI Engineer",
-    "Cybersecurity Specialist"
+    "Cybersecurity"
   ],
   roleTitle: "Backend & AI Engineer | Software Engineering | Cybersecurity",
   email: "rdivyatej@gmail.com",
   linkedin: "https://linkedin.com/in/divyatej2007",
   github: "https://github.com/rdivyatej-cloud",
+  previousPortfolio: "https://rdivyatej-cloud.github.io/divyatejportfolio2/",
   repository: "https://github.com/rdivyatej-cloud/Portfolio7",
-  location: "India (IST)",
+  location: "Based in India", // TODO: exact city
   availability: "Available for internships & entry-level roles",
   university: "SRM University-AP",
   summary:
@@ -111,6 +116,15 @@ export const TIMELINE: TimelineEntry[] = [
     notes: "TODO: exact dates"
   },
   {
+    period: "2022 — 2024",
+    title: "Intermediate (MPC)",
+    organization: "Sri Chaitanya, Hormavu, Bangalore",
+    badge: "Pre-University",
+    description:
+      "Mathematics, Physics, and Chemistry (MPC) preparatory curriculum with focused foundation in higher mathematical analytical thinking and scientific problem-solving.",
+    tags: ["Mathematics", "Physics", "Chemistry", "Analytical Problem Solving"]
+  },
+  {
     period: "2024 — 2028",
     title: "B.Tech in Computer Science Engineering (Cybersecurity)",
     organization: "SRM University-AP",
@@ -145,6 +159,7 @@ export const PROJECTS: Project[] = [
     title: "FlyRank Capstone: Usage Metering & Billing Engine",
     category: "Backend & AI Systems",
     stack: ["Node.js", "Express", "PostgreSQL", "Stripe API", "Docker"],
+    image: "./images/project-flyrank.png",
     description: [
       "Meters billable actions (API calls and AI tokens) and enforces per-tenant quota limits, pricing usage across cached, reasoning and output token types.",
       "Idempotency-key-based usage recording so retried requests return the original result instead of double-billing; /usage rollup endpoint returns live usage, limit and cost.",
@@ -170,6 +185,7 @@ export const PROJECTS: Project[] = [
       "node-cron",
       "Docker"
     ],
+    image: "./images/project-expense-tracker.png",
     description: [
       "JWT authentication with bcrypt-hashed passwords and protected REST endpoints for expenses with category-based summaries.",
       "AI-powered spending insights from monthly transaction data using Gemini.",
@@ -195,6 +211,7 @@ export const PROJECTS: Project[] = [
       "node-cron",
       "Nodemailer"
     ],
+    image: "./images/project-subscript.png",
     description: [
       "MERN app for tracking recurring subscriptions with JWT auth and user-isolated data.",
       "Recharts dashboard of costs by category and monthly-vs-yearly spend.",
@@ -210,6 +227,7 @@ export const PROJECTS: Project[] = [
     title: "Study-Mate: AI-Powered Study Assistant",
     category: "AI Web Application",
     stack: ["Next.js", "TypeScript", "React", "Gemini AI"],
+    image: "./images/project-studymate.png",
     description: [
       "Web app integrating Google Gemini to help students process and interact with study material; modular front-end architecture with documented build process."
     ],
@@ -222,6 +240,7 @@ export const PROJECTS: Project[] = [
     title: "FitLife Pulse: Gym Membership & Progress Analytics",
     category: "Python Analytics & OOP",
     stack: ["Python", "NumPy", "Pandas", "OOP", "Data Structures"],
+    image: "./images/project-fitlife.png",
     description: [
       "Management system for member registration, trainer workload, workout plans and attendance; recursive calorie aggregation and attendance-based member classification with analytics reports."
     ],
