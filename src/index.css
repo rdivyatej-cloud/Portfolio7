@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-canvas: #14110f;
+  --color-canvas-subtle: #1c1815;
+  --color-canvas-card: #221d19;
+  --color-text-primary: #f4f0eb;
+  --color-text-secondary: #9e9891;
+  --color-text-muted: #6e6761;
+  
+  --color-accent: #ccff00;
+  --color-accent-amber: #f59e0b;
+  --color-accent-muted: rgba(204, 255, 0, 0.12);
+  --color-border-subtle: rgba(244, 240, 235, 0.08);
+  --color-border-hover: rgba(204, 255, 0, 0.4);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #14110f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2522;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3732;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Motion reduction */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
