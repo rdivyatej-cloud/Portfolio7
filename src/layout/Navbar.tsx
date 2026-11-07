@@ -9,10 +9,10 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 30);
 
-      const sections = ['home', 'projects', 'experience', 'about', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      const sections = ['home', 'projects', 'experience', 'about', 'skills', 'contact'];
+      const scrollPosition = window.scrollY + 250;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -43,30 +43,35 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 py-4 sm:py-6 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#09090b]/85 backdrop-blur-md border-b border-white/[0.08] py-4'
-          : 'bg-transparent py-6'
+          ? 'bg-[#08080a]/85 backdrop-blur-md border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.4)]'
+          : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand / Logo */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        
+        {/* Brand Monogram & Name */}
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, '#home')}
-          className="group flex items-center gap-3 text-[#ededed] hover:text-[#00e5ff] transition-colors"
+          className="group flex items-center gap-2.5 text-[#ededed] hover:text-[#00e5ff] transition-colors"
         >
-          <span className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_8px_#00e5ff]" />
-          <span className="font-mono text-xs sm:text-sm tracking-widest uppercase font-semibold text-[#ededed]">
-            {PERSONAL.name}
-          </span>
-          <span className="hidden md:inline-block font-mono text-[10px] text-[#666666] uppercase tracking-wider px-2 py-0.5 rounded bg-white/[0.03] border border-white/5">
-            {PERSONAL.roleHeadline}
-          </span>
+          <div className="w-8 h-8 rounded-lg bg-[#141418] border border-white/10 flex items-center justify-center font-mono font-bold text-xs text-[#00e5ff] group-hover:border-[#00e5ff]/50 transition-colors">
+            DR
+          </div>
+          <div className="flex flex-col">
+            <span className="font-mono text-xs font-bold tracking-wider text-[#ededed] group-hover:text-white transition-colors">
+              {PERSONAL.name.toUpperCase()}
+            </span>
+            <span className="text-[10px] font-mono text-[#666666]">
+              {PERSONAL.roleHeadline}
+            </span>
+          </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-[#121215]/80 border border-white/[0.08] backdrop-blur-md">
+        {/* Center Floating Glass Pill (Reference signature) */}
+        <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full bg-[#121216]/80 border border-white/[0.08] backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.href.replace('#', '');
             return (
@@ -76,7 +81,7 @@ export const Navbar: React.FC = () => {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-white/10 text-[#00e5ff] shadow-[0_0_12px_rgba(0,229,255,0.2)]'
+                    ? 'bg-white/10 text-[#00e5ff] shadow-[0_0_12px_rgba(0,229,255,0.25)] font-semibold'
                     : 'text-[#9e9e9e] hover:text-[#ededed] hover:bg-white/[0.03]'
                 }`}
               >
@@ -86,20 +91,20 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Action Button: Get in touch */}
+        {/* Right CTA Button */}
         <div className="hidden md:flex items-center gap-4">
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wide bg-white/5 hover:bg-white/10 text-[#ededed] hover:text-[#00e5ff] border border-white/10 hover:border-[#00e5ff]/40 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wide bg-white/[0.03] hover:bg-white/[0.08] text-[#ededed] hover:text-[#00e5ff] border border-white/10 hover:border-[#00e5ff]/40 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
           >
             <span>Get In Touch</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-[#00e5ff]" />
           </a>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-3">
+        {/* Mobile Hamburger Button */}
+        <div className="flex md:hidden items-center gap-2">
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
@@ -116,18 +121,19 @@ export const Navbar: React.FC = () => {
             {mobileMenuOpen ? <X className="w-6 h-6 text-[#00e5ff]" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/10 bg-[#09090b]/98 backdrop-blur-2xl px-6 py-6 space-y-4">
-          <nav className="flex flex-col space-y-3">
+        <div className="md:hidden mt-3 mx-auto rounded-2xl border border-white/10 bg-[#0c0c0e]/98 backdrop-blur-2xl p-5 space-y-3 shadow-2xl">
+          <nav className="flex flex-col space-y-2">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="font-mono text-sm text-[#9e9e9e] hover:text-[#00e5ff] transition-colors py-2 border-b border-white/5 flex items-center justify-between"
+                className="font-mono text-sm text-[#9e9e9e] hover:text-[#00e5ff] transition-colors py-2 px-3 rounded-lg hover:bg-white/5 flex items-center justify-between"
               >
                 <span>{link.name}</span>
                 <span className="text-[10px] text-[#666666]">#</span>
