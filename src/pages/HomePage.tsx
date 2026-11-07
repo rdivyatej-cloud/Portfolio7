@@ -1,5 +1,6 @@
 import React from 'react';
 import { HeroSection } from '../sections/HeroSection';
+import { DoorsSection } from '../sections/DoorsSection';
 
 export const HomePage: React.FC = () => {
   return (
@@ -7,13 +8,15 @@ export const HomePage: React.FC = () => {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Placeholder Anchor for Subsequent Phases */}
-      <div id="doors" className="py-12 border-t border-white/5 text-center">
+      {/* Phase 3: The Doors Section */}
+      <DoorsSection />
+
+      {/* Placeholder Anchors for Subsequent Phases */}
+      <div id="story" className="py-8 border-t border-white/5 text-center">
         <span className="font-mono text-xs text-[#6e6761]">
-          [ Next: Phase 3 — The "Doors" Section &amp; Skill Specializations ]
+          [ Next: Phase 4 — Story Timeline: "Let's go back in time" ]
         </span>
       </div>
-      <div id="story" />
       <div id="projects" />
       <div id="contact" />
     </div>
